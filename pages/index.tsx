@@ -11,7 +11,7 @@ import  { useEffect, useState } from "react";
   useContract,
   
 } from "@thirdweb-dev/react";
-
+import styles from '../styles/Home.module.css'
 import  Card from "../componants/Card"
 
 
@@ -38,77 +38,7 @@ const [totaltwo, setTotaltwo] = useState('')
 const [showPopup, setShowPopup] = useState(false)
   
   
-  const { contract: firstContract } = useContract(
-        "0x1615600fE62ed38342F82eb9785029A2b1290DAF", 
-        "signature-drop"
-    );
-
-    const { contract: secondContract } = useContract(
-        "0x1052Dee9c5Ee04e12E488EaaB6BA7382726dAd30", 
-  "signature-drop"
-    );
-    
-  useEffect(() => {
-    if (!address) {
-      return
-    }
-
-    const checkBalance = async () => {
-      try {
-        if ( firstContract) {
-      const nfts = await  firstContract.getOwned(address);
-          setHasClaimedNFT(nfts?.length > 0);
-          
-          setTotal(nfts.length.toString());
-          
-        }
-             if ( secondContract ) {
-      const nfts = await  secondContract.getOwned(address);
-          setHasClaimedNFT(nfts?.length > 0);
-          
-          setTotaltwo(nfts.length.toString());
-          
-    }
-      } catch (error) {
-        setHasClaimedNFT(false)
-        console.error("Failed to get NFTS", error)
-      }
-      }
-    checkBalance()
-  }, [address, firstContract, secondContract])
- type NFT = {
-  metadata: {
-    name: string
-  }
-}
-
-const getNFTNames = (nfts: NFT[]) => {
-  const ownedNFTNames = nfts.map(nft => nft.metadata.name)
-    .filter(name => typeof name === 'string') as string[];
-  setOwnedNFTNames(ownedNFTNames);
-};
-  const getNFTNamestwo = (nfts: NFT[]) => {
-  const ownedNFTNamestwo = nfts.map(nft => nft.metadata.name)
-    .filter(name => typeof name === 'string') as string[];
-  setOwnedNFTNamestwo(ownedNFTNamestwo);
-};
-  const mintNft = async () => {
-    try {
-      if (firstContract) {
-        setIsClaiming(true)
-        await firstContract.claim(1)
-        setHasClaimedNFT(true)
-      }
-    } catch (error) {
-      setHasClaimedNFT(false)
-      console.error("failed to mint nft", error)
-    }
-    finally {
-      setIsClaiming(false)
-    }
-}
- 
-
+  
  
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -122,9 +52,9 @@ const getNFTNames = (nfts: NFT[]) => {
       total,
       selectedOption,
       streetAddress,
-      nftNames: ownedNFTNames,
+     
       totaltwo,
-      nftNamestwo: ownedNFTNamestwo
+    
     }
 
     const rawResponse = await fetch('/api/submit', {
@@ -149,44 +79,11 @@ const getNFTNames = (nfts: NFT[]) => {
     setTotal('')
     setSelectedOption('')
     setStreetAddress('')
-    setOwnedNFTNames([])
-    setOwnedNFTNamestwo([])
+    
     setTotaltwo('')
     
   }
-  useEffect(() => {
-    if (!address) {
-      return;
-    }
-
-    const getOwnedNFTNames = async () => {
-      try {
-        if (firstContract) {
-          const nfts = await firstContract.getOwned(address);
-          const ownedNFTNames = nfts.map((nft) => nft.metadata.name);
-          const ownedNFTNamesFiltered = ownedNFTNames.filter((nft) => nft !== undefined) as string[];
-setOwnedNFTNames(ownedNFTNamesFiltered);
-          
-        }
-         if (secondContract) {
-          const nfts = await secondContract.getOwned(address);
-          const ownedNFTNamestwo = nfts.map((nft) => nft.metadata.name);
-          const ownedNFTNamestwoFiltered = ownedNFTNamestwo.filter((nft) => nft !== undefined) as string[];
-setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
-          
-        }
-      } catch (error) {
-        console.error("Failed to get owned NFT names", error);
-      }
-    };
-
-    getOwnedNFTNames();
-  }, [address, firstContract, secondContract]);
-  useEffect(() => {
-    if (address) {
-      setWallet(address);
-    }
-}, [address]);
+  
  
   
 
@@ -199,7 +96,7 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
     <div className='min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12 bg-cover'
   style={{ backgroundImage: "url('https://unsplash.com/photos/Uj3S6JiXxaA')" }}>
     <div className='relative py-3 sm:max-w-xl sm:mx-auto mb-14'>
-     <ConnectWallet />  {hasClaimedNFT ? (
+     
   <main className='relative mt-4 px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20 bg-clip-padding bg-opacity-60 border border-gray-200' >
    <div>
           <img src="https://presend.io/wp-content/uploads/2023/02/pb.png" className="h-16 sm:h-24" />
@@ -215,7 +112,7 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
               type='text'
               name='firstname'
               id='firstname'
-              className='shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-md border-gray-300 rounded-md'
+              className='shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-md border-gray-300 rounded-md'
               placeholder='First Name' required
             />
           </div>
@@ -229,7 +126,7 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
               type='text'
               name='lastname'
               id='lastname'
-              className='shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-md border-gray-300 rounded-md'
+              className='shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-md border-gray-300 rounded-md'
               placeholder='Last Name' required
             />
           </div>
@@ -243,7 +140,7 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
               type='email'
               name='email'
               id='email'
-              className='shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-md border-gray-300 rounded-md'
+              className='shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-md border-gray-300 rounded-md'
               placeholder='Your Email' required
             />
           </div>
@@ -257,7 +154,7 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
               type='text'
               name='streetAddress'
               id='streetAddress'
-              className='shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-md border-gray-300 rounded-md'
+              className='shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-md border-gray-300 rounded-md'
               placeholder='Your Address (optional)' 
             />
                 </div>
@@ -271,69 +168,34 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
               type='text'
               name='country'
               id='country'
-              className='shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-md border-gray-300 rounded-md'
+              className='shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-md border-gray-300 rounded-md'
               placeholder='Your Country' 
             />
                 </div>
                  <div className="flex flex-col items-center justify-center">
-      <label htmlFor="nft-count" className="text-base font-medium text-left w-96 mb-2">Total NFTs Owned:</label>
+      <label htmlFor="nft-count" className="text-base font-medium text-left w-full mb-2">Total PRI NFTs owned:</label>
       <input
         type="text"
         id="nft-count"
         name="nft-count"
         value={total}
         onChange={(e) => setTotal(e.target.value)}
-        className="shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-md border-gray-300 rounded-md"
-        readOnly required
+        className="shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-md border-gray-300 rounded-md"
+         required
       />
     </div>   <div className="flex flex-col items-center justify-center">
-      <label htmlFor="nft-count" className="text-base font-medium text-left w-96 mb-2">Total NFTs Owned:</label>
+      <label htmlFor="nft-count" className="text-base font-medium text-left w-full mb-2">Total PII NFTs owned: </label>
       <input
         type="text"
         id="nft-count"
         name="nft-count"
         value={totaltwo}
         onChange={(e) => setTotaltwo(e.target.value)}
-        className="shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-md border-gray-300 rounded-md"
-        readOnly required
+        className="shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-md border-gray-300 rounded-md"
+         required
       />
-    </div><div className="flex hidden flex-col items-center justify-center">
-  <label htmlFor="nft-names" className="text-base font-medium text-left w-96 mb-2">NFT Names:</label>
-  <textarea
-    id="nft-names"
-    name="nft-names"
-    value={ownedNFTNames.join(', ')}
-    onChange={(e) => setOwnedNFTNames(e.target.value.split(','))}
-    className="shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-md border-gray-300 rounded-md"
-    readOnly required
-  />
-</div><div className="flex hidden flex-col items-center justify-center">
-  <label htmlFor="nft-names" className="text-base font-medium text-left w-96 mb-2">NFT Names:</label>
-  <textarea
-    id="nft-names"
-    name="nft-names"
-    value={ownedNFTNamestwo.join(', ')}
-    onChange={(e) => setOwnedNFTNamestwo(e.target.value.split(','))}
-    className="shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-md border-gray-300 rounded-md"
-    readOnly required
-  />
-</div>
-          <div className='flex hidden items-center justify-center flex-col'>
-          
-                  
-            <label htmlFor='wallet' className="text-base font-medium text-left w-96 mb-2">Your Wallet Address:
-            </label>
-            <input
-              value={wallet}
-              onChange={(e) => setWallet(e.target.value)}
-              type='tel'
-              name='wallet'
-              id='wallet'
-              className='shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-md border-gray-300 rounded-md'
-             placeholder='Your Wallet'  readOnly 
-            />
-               
-                </div><div className="flex flex-col mt-5">
+    </div>
+          <div className="flex flex-col mt-5">
     <div className="flex-row mb-3">
       <input
         type="radio"
@@ -344,7 +206,8 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
         onChange={(e) => setSelectedOption(e.target.value)}
       />
       <label htmlFor="option1" className="text-md cursor-pointer font-medium ml-5">
-        Yes I own both
+        Yes, I own both Wolfer Finance and PreSend NFTs.
+
       </label>
     </div>
     <div className="flex-row">
@@ -357,7 +220,7 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
         onChange={(e) => setSelectedOption(e.target.value)}
       />
       <label htmlFor="option2" className="text-md font-medium cursor-pointer ml-5">
-        No I don't
+        No, I do not own both Wolfer Finance and PreSend NFTs.
       </label>
     </div>
   </div>
@@ -365,9 +228,9 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
           <div className='flex items-center justify-center'>
             <button
               type='submit'
-              className='flex items-center justify-center text-sm w-96 rounded-md shadow py-3 px-2 text-white bg-indigo-600'
+              className='flex items-center justify-center text-sm w-full rounded-md shadow py-3 px-2 text-white bg-indigo-600'
             >
-              Save
+             Submit
             </button>
           </div>
         </form>
@@ -391,16 +254,16 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
         </div>
       </div>
       <div className='flex flex-col justify-around mt-5 sm:mt-6'>
-        <a href='https://presend.io' target='_blank' rel='noopener noreferrer'>
+        <a href='https://app.tokenoftrust.com/com/presend.io' target='_blank' rel='noopener noreferrer'>
           <button
             type='button'
             className='inline-flex mb-4 justify-center w-full rounded-md border border-transparent px-4 py-2  bg-green-500 text-md leading-6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5'
           >
-            PreSend Kyc
+            PreSend KYC/AML Link
           </button>
         </a> 
-  
-    <a href='https://presend.io' target='_blank' rel='noopener noreferrer'>
+  <span className='flex  rounded-md shadow-sm'>
+    <a href='https://app.tokenoftrust.com/com/kyc.wolfer.finance' target='_blank' rel='noopener noreferrer'>
       <button
         type='button'
         className='inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-md leading-6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5'
@@ -408,7 +271,7 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
         PreSend & Wolfer Finance Dual Holder KYC/AML Link
       </button>
     </a>
-  
+  </span>
 
       </div>
       <button
@@ -426,7 +289,7 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
       </div>
 
      
-    </main> ):(<p className='p-4 font-semibold'>you dont have our membership sir/madam</p>)}</div>
+    </main> </div>
     <div className='  flex object-center items-center'>
       <div className='max-w-4xl mx-auto  flex flex-col p-6'><Card /></div>  </div></div> </div> 
   )
