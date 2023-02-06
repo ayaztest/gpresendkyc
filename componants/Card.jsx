@@ -22,7 +22,7 @@ export default function Cardx() {
         <Faq />
       </CardBody>
       <CardFooter className='pt-0 text-center'>
-        Thank you for visiting
+        <p className='p-2 font-semibold'>Thank you for visiting</p>
       </CardFooter>
     </Card>
   )

@@ -54,8 +54,8 @@ export default function Faq() {
         <AccordionBody>
           If you are an accredited investor, please email
           Jonathan@DunsmoorLaw.com to complete the accredited investor process.
-          An accredited investor under U.S. law is found here: link
-          (https://www.sec.gov/education/capitalraising/building-blocks/accredited-investor)
+          An accredited investor under U.S. law is found here:
+          https://www.sec.gov/education/capitalraising/building-blocks/accredited-investor
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 6} animate={customAnimation}>

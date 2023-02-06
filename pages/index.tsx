@@ -39,12 +39,12 @@ const [showPopup, setShowPopup] = useState(false)
   
   
   const { contract: firstContract } = useContract(
-        "0x62A4270F8EB826428B6afD158d647e56558AAf30", 
+        "0x1615600fE62ed38342F82eb9785029A2b1290DAF", 
         "signature-drop"
     );
 
     const { contract: secondContract } = useContract(
-        "0xE62d775E3Cc91659034dFC3b09a46259D6942c2c", 
+        "0x1052Dee9c5Ee04e12E488EaaB6BA7382726dAd30", 
   "signature-drop"
     );
     
@@ -399,7 +399,7 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
             PreSend Kyc
           </button>
         </a> 
-  <span className='flex  rounded-md shadow-sm'>
+  
     <a href='https://presend.io' target='_blank' rel='noopener noreferrer'>
       <button
         type='button'
@@ -408,7 +408,7 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
         PreSend & Wolfer Finance Dual Holder KYC/AML Link
       </button>
     </a>
-  </span>
+  
 
       </div>
       <button
@@ -426,7 +426,7 @@ setOwnedNFTNamestwo(ownedNFTNamestwoFiltered);
       </div>
 
      
-    </main> ):(<p>you dont have our membership sir/madam</p>)}</div>
+    </main> ):(<p className='p-4 font-semibold'>you dont have our membership sir/madam</p>)}</div>
     <div className='  flex object-center items-center'>
       <div className='max-w-4xl mx-auto  flex flex-col p-6'><Card /></div>  </div></div> </div> 
   )
