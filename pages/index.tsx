@@ -1,24 +1,24 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+
 import { FormEvent } from 'react'
 
 
 import  { useEffect, useState } from "react";
   import { 
-  ConnectWallet,
+  
   useAddress,
-  useContract,
+ 
   
 } from "@thirdweb-dev/react";
-import styles from '../styles/Home.module.css'
+
 import  Card from "../componants/Card"
 
 
 
 const Home: NextPage = () => {
 
-  
+     const [isKycAsBusiness, setIsKycAsBusiness] = useState(false);
+  const [businessName, setBusinessName] = useState('');
   const [firstname, setFirstname] = useState('')
   const [lastname, setLastname] = useState('')
   const [email, setEmail] = useState('')
@@ -52,7 +52,7 @@ const [showPopup, setShowPopup] = useState(false)
       total,
       selectedOption,
       streetAddress,
-     
+     businessName,
       totaltwo,
     
     }
@@ -79,7 +79,7 @@ const [showPopup, setShowPopup] = useState(false)
     setTotal('')
     setSelectedOption('')
     setStreetAddress('')
-    
+        setBusinessName('')
     setTotaltwo('')
     
   }
@@ -224,7 +224,45 @@ const [showPopup, setShowPopup] = useState(false)
       </label>
     </div>
   </div>
-                
+      <div className='flex hidden items-center justify-center flex-col'>
+
+
+            <label htmlFor='wallet' className="text-base font-medium text-left w-full mb-2">Your Wallet Address:
+            </label>
+            <input
+              value={wallet}
+              onChange={(e) => setWallet(e.target.value)}
+              type='tel'
+              name='wallet'
+              id='wallet'
+              className='shadow-md focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-md border-gray-300 rounded-md'
+             placeholder='Your Wallet'  readOnly 
+            />
+
+                </div>   <div>
+        <input
+          type="checkbox"
+          id="businessCheckbox"
+          checked={isKycAsBusiness}
+                    onChange={() => setIsKycAsBusiness(!isKycAsBusiness)}
+                     className="form-checkbox mr-3"
+        />
+        <label htmlFor="businessCheckbox" className='text-base cursor-pointer'>
+          Are you KYCing as a business? (NOTE: Every 20% OR LARGER owner of the business must still kyc as an individual, so you will still have to go through the individual - personal - kyc process)
+        </label>
+      </div>
+      {isKycAsBusiness && (
+        <div>
+          <label htmlFor="businessNameInput">What is the legal name of your business?</label>
+          <input
+            type="text"
+            id="businessNameInput"
+            value={businessName}
+                      onChange={(e) => setBusinessName(e.target.value)}
+                      className="shadow-sm focus:outline-none focus:shadow-outline border border-gray-300 rounded-md py-2 px-4 block w-full appearance-none leading-normal"
+          />
+        </div>
+      )}          
           <div className='flex items-center justify-center'>
             <button
               type='submit'
@@ -232,7 +270,10 @@ const [showPopup, setShowPopup] = useState(false)
             >
              Submit
             </button>
-          </div>
+          </div><div className='flex  '>
+        <p className='text-xs text-red-600 font-semibold text-justify  pt-5'>   Please check the FAQ section that refers to countries of residency. If you live in any of those countries or regions, your kyc process will start on the 15th of February and you need to reach out directly to bryan.jorolan@tokenoftrust.com and indicate to him that you are in one of those affected countries, because that is a separate kyc
+                process than all other regions and countries and is not supported until February 15th or after.</p>     
+       </div>
         </form>
  
          
@@ -262,7 +303,7 @@ const [showPopup, setShowPopup] = useState(false)
             PreSend KYC/AML Link
           </button>
         </a> 
-  <span className='flex  rounded-md shadow-sm'>
+  <span className='w-full rounded-md shadow-sm'>
     <a href='https://app.tokenoftrust.com/com/kyc.wolfer.finance' target='_blank' rel='noopener noreferrer'>
       <button
         type='button'
