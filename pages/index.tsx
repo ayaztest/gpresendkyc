@@ -207,7 +207,7 @@ HAVE ALL THE INFORMATION BEFORE YOU START** </p>
 
 
                 <label htmlFor='wallet' className="text-base font-medium text-left w-full mb-2 ">
-                  Please provide ALL wallets addresses that house ALL of your PreSend Retail &amp; PreSend
+                  Please  provide ALL wallets addresses that house ALL of your PreSend Retail &amp; PreSend
 Institutional NFTs (Please separate wallet addresses with a ; ):
             </label>
             <input
@@ -234,7 +234,7 @@ Institutional NFTs (Please separate wallet addresses with a ; ):
       </div>
       {isKycAsBusiness && (
         <div>
-          <label htmlFor="businessNameInput">What is the legal name of your business?</label>
+          <label htmlFor="businessNameInput">What is the legal name of your business please?</label>
           <input
             type="text"
             id="businessNameInput"
